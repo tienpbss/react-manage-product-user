@@ -4,7 +4,7 @@ export default function ListProduct() {
     return (
         <>
             <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-                <h2 class="display-4">User Management</h2>
+                <h3 class="display-5">User Management</h3>
                 <p>
                     <Link to="/user/create">Add new</Link>
                 </p>
