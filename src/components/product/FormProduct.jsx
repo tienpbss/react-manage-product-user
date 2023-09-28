@@ -8,6 +8,8 @@ const productAttribute = {
     description: "description",
 };
 
+const priceRegex = /^\d+(?:[.,]\d+)*$/;
+
 export default function FormProduct() {
     const [product, setProduct] = useState({
         name: "",
@@ -23,12 +25,20 @@ export default function FormProduct() {
     const handleErrors = () => {
         const errorsFeedBack = {
             name: !product.name ? "Please provide a valid name" : "",
-            price: !product.price ? "Please provide a valid price" : "",
+            price:
+                !product.price || !priceRegex.test(product.price)
+                    ? "Please provide a valid price"
+                    : "",
             description: !product.description
                 ? "Please provide a valid description"
                 : "",
         };
         setErrors({ ...errorsFeedBack });
+        return (
+            !errorsFeedBack.name &&
+            !errorsFeedBack.price &&
+            !errorsFeedBack.description
+        );
     };
 
     const handleChange = (e) => {
@@ -44,13 +54,14 @@ export default function FormProduct() {
                 setErrors((prev) => ({ ...prev, name: err }));
                 break;
             case productAttribute.price:
-                err = !value ? "Please provide a valid price" : "";
+                err =
+                    !value || !priceRegex.test(value)
+                        ? "Please provide a valid price"
+                        : "";
                 setErrors((prev) => ({ ...prev, price: err }));
                 break;
             case productAttribute.description:
-                err = !value
-                    ? "Please provide a valid description"
-                    : "";
+                err = !value ? "Please provide a valid description" : "";
                 setErrors((prev) => ({ ...prev, description: err }));
                 break;
             default:
@@ -60,7 +71,11 @@ export default function FormProduct() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
-        handleErrors();
+        const canSave = handleErrors();
+        if (canSave){
+            // fetch()
+            console.log('save')
+        }
     };
 
     return (
