@@ -3,16 +3,16 @@ import { Link } from "react-router-dom";
 export default function ListProduct() {
     return (
         <>
-            <div class="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
-                <h3 class="display-5">User Management</h3>
+            <div className="pricing-header px-3 py-3 pt-md-5 pb-md-4 mx-auto text-center">
+                <h3 className="display-5">User Management</h3>
                 <p>
                     <Link to="/user/create">Add new</Link>
                 </p>
             </div>
 
-            <div class="container">
-                <div class="card-deck mb-3 text-center">
-                    <table class="table table-bordered">
+            <div className="container">
+                <div className="card-deck mb-3 text-center">
+                    <table className="table table-bordered">
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
