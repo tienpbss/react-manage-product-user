@@ -1,6 +1,6 @@
 import classNames from "classnames";
-import { useState } from "react";
-import { Link } from "react-router-dom";
+import { useEffect, useState } from "react";
+import { Link, useNavigate, useParams } from "react-router-dom";
 
 const productAttribute = {
     name: "name",
@@ -11,6 +11,9 @@ const productAttribute = {
 const priceRegex = /^\d+(?:[.,]\d+)*$/;
 
 export default function FormProduct() {
+    const navigate = useNavigate();
+    const { productId } = useParams();
+
     const [product, setProduct] = useState({
         name: "",
         price: "",
@@ -21,6 +24,18 @@ export default function FormProduct() {
         price: "",
         description: "",
     });
+
+    useEffect(() => {
+        if (productId) {
+            fetch(`${process.env.REACT_APP_API_ENDPOINT}/products/${productId}`)
+                .then(res => {
+                    return res.json();
+                })
+                .then(data => {
+                    setProduct(data)
+                })
+        }
+    }, [productId])
 
     const handleErrors = () => {
         const errorsFeedBack = {
@@ -72,10 +87,44 @@ export default function FormProduct() {
     const handleSubmit = (e) => {
         e.preventDefault();
         const canSave = handleErrors();
-        if (canSave){
-            // fetch()
-            console.log('save')
+        if (!canSave){
+            return;
         }
+        if (!product.id){
+            fetch(`${process.env.REACT_APP_API_ENDPOINT}/products`, {
+                method: 'POST',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(product),
+            })
+            .then(res => {
+                return res.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    navigate('/product');
+                }
+            })            
+        }
+        else {
+            fetch(`${process.env.REACT_APP_API_ENDPOINT}/products/${productId}`,{
+                method: 'PUT',
+                headers: {
+                    "Content-Type": "application/json"
+                },
+                body: JSON.stringify(product),
+            })
+            .then(res => {
+                return res.json();
+            })
+            .then(data => {
+                if (data.success) {
+                    navigate('/product');
+                }
+            }) 
+        }
+
     };
 
     return (
@@ -169,9 +218,9 @@ export default function FormProduct() {
                                 Save
                             </button>{" "}
                             &nbsp;
-                            <button type="reset" className="btn btn-danger">
+                            <Link to='/product' type="reset" className="btn btn-danger">
                                 Cancel
-                            </button>
+                            </Link>
                         </div>
                     </div>
                 </form>

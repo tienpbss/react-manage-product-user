@@ -17,6 +17,7 @@ function App() {
             <Route path='/' element={<HomePage />} />
             <Route path='/product' element={<ListProduct />} />
             <Route path='/product/create' element={<FormProduct />} />
+            <Route path='/product/edit/:productId' element={<FormProduct />} />
             <Route path='/user/' element={<ListUser />} />
             <Route path='/user/create' element={<FormUser />} />
           </Routes>
