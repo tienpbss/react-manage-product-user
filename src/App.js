@@ -20,6 +20,7 @@ function App() {
             <Route path='/product/edit/:productId' element={<FormProduct />} />
             <Route path='/user/' element={<ListUser />} />
             <Route path='/user/create' element={<FormUser />} />
+            <Route path='/user/edit/:userId' element={<FormUser />} />
           </Routes>
         </div>
     );

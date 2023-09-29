@@ -218,7 +218,7 @@ export default function FormProduct() {
                                 Save
                             </button>{" "}
                             &nbsp;
-                            <Link to='/product' type="reset" className="btn btn-danger">
+                            <Link to='/product' className="btn btn-danger">
                                 Cancel
                             </Link>
                         </div>
